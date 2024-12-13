@@ -21,7 +21,13 @@ app.use(cookieParser());
 // Database
 database.connect();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://e-commerce-website-client-steel.vercel.app",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions));
 
 // Routes
 adminRoutes(app);
@@ -31,4 +37,4 @@ sellerRoutes(app);
 // Listen
 app.listen(port, () => {
   console.log(`App listen on port ${port}`);
-})
+});
