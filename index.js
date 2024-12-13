@@ -18,15 +18,21 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-const corsOptions ={
-  origin:'*', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200,
-}
-app.use(cors(corsOptions));
-
 // Database
 database.connect();
+
+app.use(function (req, res, next) {
+  // Allow access request from any computers
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE,PATCH');
+  res.header('Access-Control-Allow-Credentials', true);
+  if ('OPTIONS' == req.method) {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 // Routes
 adminRoutes(app);
