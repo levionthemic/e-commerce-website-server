@@ -25,7 +25,7 @@ module.exports.index = async (req, res) => {
         order.products.forEach((productInOrder, index) => {
           const pathSegments = productInOrder.primary_category_path.split("/");
           if (pathSegments[2] === category_id) {
-            const user = users.find((user) => user.id === order.userId);
+            const user = users.find((user) => user._id === order.userId);
             products.push({
               productId: productInOrder.id,
               productName: productInOrder.name,
